@@ -1,0 +1,31 @@
+{
+  "appId": "com.leuendorff.tictactoe",
+  "appName": "Toe Tac Tic",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#0b0b14",
+    "preferredContentMode": "mobile",
+    "allowsLinkPreview": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "launchAutoHide": true,
+      "backgroundColor": "#0b0b14",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#6c63ff",
+      "showSpinner": true,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "dark",
+      "backgroundColor": "#0b0b14"
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "dark"
+    }
+  }
+}

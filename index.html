@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Toe Tac Tic" />
+  <meta name="theme-color" content="#0b0b14" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Toe Tac Tic</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body data-theme="classic">
+
+  <!-- ============ COIN HUD ============ -->
+  <div id="coin-hud">
+    <span id="coin-icon">🪙</span>
+    <span id="coin-count">0</span>
+    <span class="coin-label">Coins</span>
+  </div>
+
+  <!-- ============ COIN BURST CONTAINER ============ -->
+  <div id="burst-container"></div>
+
+  <!-- ============ MENU SCREEN ============ -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-content">
+      <header class="site-nav">
+        <a href="#hero" class="brand">Toe Tac Tic</a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <button class="nav-link-btn burger-btn" type="button" onclick="toggleOnlineMenu()">Menu</button>
+        </nav>
+        <button class="btn-nav-play" onclick="startGame('easy')">Play now</button>
+      </header>
+
+      <section class="online-drawer" id="online-drawer" hidden>
+        <div class="online-drawer-header">
+          <div>
+            <p class="section-kicker">Online</p>
+            <h2 class="drawer-title">Optional features</h2>
+          </div>
+          <button class="drawer-close" type="button" onclick="toggleOnlineMenu(false)">Close</button>
+        </div>
+        <div class="online-grid">
+          <article class="feature-card online-card">
+            <div class="online-header-row">
+              <h3 class="feature-title">Player profile</h3>
+              <span class="online-status-pill" id="gc-status">Game Center unavailable</span>
+            </div>
+            <p class="feature-copy" id="gc-message">Use Game Center if you want ranking and matchmaking.</p>
+            <div class="player-id-card">
+              <span class="player-id-label">Current player</span>
+              <strong class="player-id-value" id="online-player-id">Guest player</strong>
+            </div>
+            <div class="online-actions">
+              <button class="btn-hero-secondary" type="button" onclick="authenticateGameCenter()">Use Game Center</button>
+              <button class="btn-hero-secondary" type="button" onclick="loadOnlineLeaderboard()">Refresh board</button>
+            </div>
+          </article>
+          <article class="feature-card online-card">
+            <div class="online-header-row">
+              <h3 class="feature-title">Live match</h3>
+              <span class="online-status-pill" id="pvp-status">Offline</span>
+            </div>
+            <p class="feature-copy" id="pvp-message">Find a live opponent and start a head-to-head round.</p>
+            <div class="online-actions">
+              <button class="btn-hero-secondary" type="button" onclick="startOnlineMatchmaking()">Find opponent</button>
+              <button class="btn-hero-secondary" type="button" onclick="cancelOnlineMatchmaking()">Cancel</button>
+            </div>
+          </article>
+        </div>
+        <div class="leaderboard-card">
+          <div class="online-header-row">
+            <h3 class="feature-title">Score board</h3>
+            <span class="leaderboard-meta">Total score</span>
+          </div>
+          <ol class="leaderboard-list" id="leaderboard-list">
+            <li class="leaderboard-empty">Sign in to load the score board.</li>
+          </ol>
+          <div class="leaderboard-current-user" id="leaderboard-current-user" hidden>
+            <span class="leaderboard-current-label">Your rank</span>
+            <span class="leaderboard-current-value" id="leaderboard-current-value">-</span>
+          </div>
+          <div class="leaderboard-pagination" id="leaderboard-pagination" hidden>
+            <button class="btn-hero-secondary" type="button" id="leaderboard-prev" onclick="changeLeaderboardPage(-1)">Previous</button>
+            <span class="leaderboard-page-indicator" id="leaderboard-page-indicator">Page 1</span>
+            <button class="btn-hero-secondary" type="button" id="leaderboard-next" onclick="changeLeaderboardPage(1)">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="hero" id="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Start fast. Play offline.</p>
+          <h1 class="title">TIC<span class="accent">TAC</span>TOE <span class="title-shift">pick a board and start playing.</span></h1>
+          <div class="hero-progress" aria-label="Player progress">
+            <div class="hero-progress-card">
+              <span class="hero-progress-label">Player</span>
+              <span class="hero-progress-value hero-progress-name" id="hero-player-name">Guest player</span>
+            </div>
+            <div class="hero-progress-card">
+              <span class="hero-progress-label">Score</span>
+              <span class="hero-progress-value" id="menu-score">0</span>
+            </div>
+            <div class="hero-progress-card">
+              <span class="hero-progress-label">Coins</span>
+              <span class="hero-progress-value" id="menu-coins">0</span>
+            </div>
+            <div class="hero-progress-card">
+              <span class="hero-progress-label">Ranked score</span>
+              <span class="hero-progress-value" id="menu-ranked-score">-</span>
+              <span class="hero-progress-subvalue" id="menu-ranked-rank">Rank -</span>
+            </div>
+          </div>
+          <div class="hero-account" aria-label="Player account status">
+            <span class="hero-account-label">Online</span>
+            <span class="hero-account-note" id="hero-player-note">Offline play is available. Sign in later if you want ranked scores or live matches.</span>
+          </div>
+          <div class="hero-actions hero-actions-primary">
+            <button class="btn-hero-primary" onclick="startGame('easy')">Start Easy</button>
+            <button class="btn-hero-secondary" onclick="startGame('medium')">Start medium</button>
+          </div>
+          <div class="hero-actions hero-actions-secondary">
+            <button class="btn-hero-secondary" id="hero-login-cta" onclick="authenticateGameCenter()">Sign in for online play</button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true" hidden>
+          <div class="hero-card preview-card">
+            <div class="preview-header">
+              <span class="preview-badge">Start screen</span>
+              <span class="preview-caption">Quick rounds</span>
+            </div>
+            <div class="preview-grid">
+              <span class="preview-cell x">X</span>
+              <span class="preview-cell"></span>
+              <span class="preview-cell o">O</span>
+              <span class="preview-cell"></span>
+              <span class="preview-cell x">X</span>
+              <span class="preview-cell"></span>
+              <span class="preview-cell o">O</span>
+              <span class="preview-cell"></span>
+              <span class="preview-cell x">X</span>
+            </div>
+          </div>
+          <div class="hero-stat-grid">
+            <div class="hero-card metric-card">
+              <span class="metric-value" id="mode-count">7</span>
+              <span class="metric-label">modes to climb</span>
+            </div>
+            <div class="hero-card metric-card">
+              <span class="metric-value">1 tap</span>
+              <span class="metric-label">from landing to first move</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="offline-spotlight" id="offline-play">
+        <div class="section-intro compact-intro">
+          <p class="section-kicker">Offline play</p>
+          <h2 class="section-title">Start here.</h2>
+          <p class="section-copy">Choose a board and play. No account needed.</p>
+        </div>
+        <div class="offline-actions">
+          <button class="btn-cta-primary" onclick="startGame('easy')">Start Easy now</button>
+          <button class="btn-cta-secondary" onclick="startGame('medium')">Start Medium</button>
+          <button class="btn-cta-secondary" onclick="scrollToLevels()">Browse all modes</button>
+        </div>
+      </section>
+
+      <section class="arena-section" id="levels">
+        <div class="section-intro compact-intro">
+          <p class="section-kicker">Modes</p>
+          <h2 class="section-title">Pick a board.</h2>
+        </div>
+
+        <div class="level-grid">
+
+        <!-- EASY — Classic Theme -->
+        <div class="level-card unlocked" data-level="easy" id="card-easy">
+          <div class="theme-stripe" style="background:var(--c-easy)"></div>
+          <div class="level-badge">
+            <span class="level-icon">😊</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-easy)">Classic</div>
+          <h2 class="level-name">Easy</h2>
+          <p class="level-desc">Easy 3x3.</p>
+          <div class="level-meta-row">
+            <span class="level-size">3x3</span>
+            <span class="level-style">Warm-up</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+5 🪙 for a win</span>
+            <span class="reward-draw">+2 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('easy')">Start Easy</button>
+          <div class="unlock-overlay" style="display:none"></div>
+        </div>
+
+        <!-- MEDIUM — Forest Theme -->
+        <div class="level-card locked" data-level="medium" id="card-medium">
+          <div class="theme-stripe" style="background:var(--c-medium)"></div>
+          <div class="level-badge">
+            <span class="level-icon">🌿</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-medium)">Forest</div>
+          <h2 class="level-name">Medium</h2>
+          <p class="level-desc">Tighter 3x3.</p>
+          <div class="level-meta-row">
+            <span class="level-size">3x3</span>
+            <span class="level-style">Tactical</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+15 🪙 for a win</span>
+            <span class="reward-draw">+4 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('medium')">Start Medium</button>
+          <div class="unlock-overlay" id="overlay-medium">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Unlock for <strong>20 🪙</strong></p>
+            <button class="btn-unlock" style="border-color:var(--c-medium);color:var(--c-medium)" onclick="unlockLevel('medium')">Unlock</button>
+          </div>
+        </div>
+
+        <!-- HARD — Volcanic Theme -->
+        <div class="level-card locked" data-level="hard" id="card-hard">
+          <div class="theme-stripe" style="background:var(--c-hard)"></div>
+          <div class="level-badge">
+            <span class="level-icon">🌋</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-hard)">Volcanic</div>
+          <h2 class="level-name">Hard</h2>
+          <p class="level-desc">4x4 pressure.</p>
+          <div class="level-meta-row">
+            <span class="level-size">4x4</span>
+            <span class="level-style">Aggressive</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+40 🪙 for a win</span>
+            <span class="reward-draw">+8 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('hard')">Start Hard</button>
+          <div class="unlock-overlay" id="overlay-hard">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Unlock for <strong>50 🪙</strong></p>
+            <button class="btn-unlock" style="border-color:var(--c-hard);color:var(--c-hard)" onclick="unlockLevel('hard')">Unlock</button>
+          </div>
+        </div>
+
+        <!-- EXPERT — Space Theme -->
+        <div class="level-card locked" data-level="expert" id="card-expert">
+          <div class="theme-stripe" style="background:var(--c-expert)"></div>
+          <div class="level-badge">
+            <span class="level-icon">🚀</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-expert)">Space</div>
+          <h2 class="level-name">Expert</h2>
+          <p class="level-desc">5x5 pressure.</p>
+          <div class="level-meta-row">
+            <span class="level-size">5x5</span>
+            <span class="level-style">Relentless</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+60 🪙 for a win</span>
+            <span class="reward-draw">+12 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('expert')">Start Expert</button>
+          <div class="unlock-overlay" id="overlay-expert">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Unlock for <strong>100 🪙</strong></p>
+            <button class="btn-unlock" style="border-color:var(--c-expert);color:var(--c-expert)" onclick="unlockLevel('expert')">Unlock</button>
+          </div>
+        </div>
+
+        <!-- LEGEND — Neon Theme -->
+        <div class="level-card locked" data-level="legend" id="card-legend">
+          <div class="theme-stripe" style="background:var(--c-legend)"></div>
+          <div class="level-badge">
+            <span class="level-icon">👾</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-legend)">Neon</div>
+          <h2 class="level-name">Legend</h2>
+          <p class="level-desc">6x6 pressure.</p>
+          <div class="level-meta-row">
+            <span class="level-size">6x6</span>
+            <span class="level-style">No mercy</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+100 🪙 for a win</span>
+            <span class="reward-draw">+20 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('legend')">Start Legend</button>
+          <div class="unlock-overlay" id="overlay-legend">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Unlock for <strong>200 🪙</strong></p>
+            <button class="btn-unlock" style="border-color:var(--c-legend);color:var(--c-legend)" onclick="unlockLevel('legend')">Unlock</button>
+          </div>
+        </div>
+
+        <div class="level-card locked" data-level="master" id="card-master">
+          <div class="theme-stripe" style="background:#8ec5ff"></div>
+          <div class="level-badge">
+            <span class="level-icon">🧿</span>
+          </div>
+          <div class="theme-tag" style="color:#8ec5ff">Astral</div>
+          <h2 class="level-name">Master</h2>
+          <p class="level-desc">7x7 score chase.</p>
+          <div class="level-meta-row">
+            <span class="level-size">7x7</span>
+            <span class="level-style">Score chase</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+130 🪙 for a win</span>
+            <span class="reward-draw">+24 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('master')">Start Master</button>
+          <div class="unlock-overlay" id="overlay-master">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Unlock for <strong>320 🪙</strong></p>
+            <button class="btn-unlock" style="border-color:#8ec5ff;color:#8ec5ff" onclick="unlockLevel('master')">Unlock</button>
+          </div>
+        </div>
+
+        <div class="level-card locked" data-level="mythic" id="card-mythic">
+          <div class="theme-stripe" style="background:#ffd166"></div>
+          <div class="level-badge">
+            <span class="level-icon">☄️</span>
+          </div>
+          <div class="theme-tag" style="color:#ffd166">Solar</div>
+          <h2 class="level-name">Mythic</h2>
+          <p class="level-desc">8x8 final board.</p>
+          <div class="level-meta-row">
+            <span class="level-size">8x8</span>
+            <span class="level-style">Endgame</span>
+          </div>
+          <div class="level-reward">
+            <span class="reward-win">+170 🪙 for a win</span>
+            <span class="reward-draw">+32 🪙 for a draw</span>
+          </div>
+          <button class="btn-play" onclick="startGame('mythic')">Start Mythic</button>
+          <div class="unlock-overlay" id="overlay-mythic">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Unlock for <strong>480 🪙</strong></p>
+            <button class="btn-unlock" style="border-color:#ffd166;color:#ffd166" onclick="unlockLevel('mythic')">Unlock</button>
+          </div>
+        </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ============ GAME SCREEN ============ -->
+  <div id="screen-game" class="screen">
+
+    <!-- Theme-specific ambient layers -->
+    <div class="theme-bg-layer" id="theme-bg-layer"></div>
+
+    <div class="game-header">
+      <button class="btn-back" onclick="goToMenu()">&#8592; Back</button>
+      <div class="game-title-area">
+        <span id="game-difficulty-label" class="difficulty-label"></span>
+        <span id="game-theme-label" class="theme-label"></span>
+      </div>
+      <div class="score-board">
+        <div class="score-item player-score">
+          <span class="score-label" id="score-label-player">You (X)</span>
+          <span class="score-value" id="score-player">0</span>
+        </div>
+        <div class="score-item draw">
+          <span class="score-label">Draws</span>
+          <span class="score-value" id="score-draw">0</span>
+        </div>
+        <div class="score-item ai-score">
+          <span class="score-label" id="score-label-opponent">AI (O)</span>
+          <span class="score-value" id="score-ai">0</span>
+        </div>
+      </div>
+      <div class="round-stats">
+        <div class="score-item timer-score">
+          <span class="score-label">Timer</span>
+          <span class="score-value" id="round-timer">0.0s</span>
+        </div>
+        <div class="score-item streak-score">
+          <span class="score-label">Streak</span>
+          <span class="score-value" id="win-streak">0</span>
+        </div>
+      </div>
+      <!-- Audio controls: separate toggles for music and SFX -->
+      <div class="audio-controls">
+        <button id="btn-music" class="btn-audio" onclick="toggleMusic()" title="Music">🎵</button>
+        <button id="btn-sfx"   class="btn-audio" onclick="toggleSFX()"   title="Sound effects">🔔</button>
+      </div>
+    </div>
+
+    <div class="turn-indicator">
+      <div class="turn-badge player-turn" id="badge-player">You (X)</div>
+      <div class="turn-vs">vs</div>
+      <div class="turn-badge ai-turn" id="badge-ai">AI (O)</div>
+    </div>
+
+    <div class="board-meta" aria-live="polite">
+      <span id="board-grid-label" class="board-meta-pill"></span>
+      <span id="board-target-label" class="board-meta-pill"></span>
+    </div>
+
+    <div class="board-wrapper">
+      <div class="board" id="board"></div>
+      <svg class="win-line-svg" id="win-line-svg" viewBox="0 0 3 3" preserveAspectRatio="none">
+        <line id="win-line" x1="-10" y1="-10" x2="-10" y2="-10" />
+      </svg>
+    </div>
+
+    <button class="btn-new-game" onclick="resetBoard()">New round</button>
+  </div>
+
+  <!-- ============ RESULT MODAL ============ -->
+  <div id="result-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-icon" id="modal-icon"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-message" id="modal-message"></p>
+      <div class="modal-coins" id="modal-coins"></div>
+      <p class="modal-reward-breakdown" id="modal-reward-breakdown"></p>
+      <div class="modal-actions">
+        <button class="btn-modal-play" onclick="resetBoard(); closeModal()">Play again</button>
+        <button class="btn-modal-menu" onclick="goToMenu(); closeModal()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div id="toast" class="toast"></div>
+
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Tic Tac Toe" />
+  <meta name="theme-color" content="#0b0b14" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body data-theme="classic">
+
+  <!-- ============ COIN HUD ============ -->
+  <div id="coin-hud">
+    <span id="coin-icon">🪙</span>
+    <span id="coin-count">0</span>
+    <span class="coin-label">Coins</span>
+  </div>
+
+  <!-- ============ COIN BURST CONTAINER ============ -->
+  <div id="burst-container"></div>
+
+  <!-- ============ MENU SCREEN ============ -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-content">
+      <h1 class="title">TIC<span class="accent">TAC</span>TOE</h1>
+      <p class="subtitle">Spiel gegen die KI — verdiene Coins, schalte Level frei</p>
+
+      <div class="level-grid">
+
+        <!-- EASY — Classic Theme -->
+        <div class="level-card unlocked" data-level="easy" id="card-easy">
+          <div class="theme-stripe" style="background:var(--c-easy)"></div>
+          <div class="level-badge">
+            <span class="level-icon">😊</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-easy)">Classic</div>
+          <h2 class="level-name">Leicht</h2>
+          <p class="level-desc">Die KI spielt zufällige Züge. Perfekt zum Aufwärmen.</p>
+          <div class="level-reward">
+            <span class="reward-win">+5 🪙 Sieg</span>
+            <span class="reward-draw">+2 🪙 Unentschieden</span>
+          </div>
+          <button class="btn-play" onclick="startGame('easy')">Spielen</button>
+          <div class="unlock-overlay" style="display:none"></div>
+        </div>
+
+        <!-- MEDIUM — Forest Theme -->
+        <div class="level-card locked" data-level="medium" id="card-medium">
+          <div class="theme-stripe" style="background:var(--c-medium)"></div>
+          <div class="level-badge">
+            <span class="level-icon">🌿</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-medium)">Forest</div>
+          <h2 class="level-name">Mittel</h2>
+          <p class="level-desc">Die KI blockt deine Züge und greift strategisch an.</p>
+          <div class="level-reward">
+            <span class="reward-win">+15 🪙 Sieg</span>
+            <span class="reward-draw">+4 🪙 Unentschieden</span>
+          </div>
+          <button class="btn-play" onclick="startGame('medium')">Spielen</button>
+          <div class="unlock-overlay" id="overlay-medium">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Für <strong>20 🪙</strong> freischalten</p>
+            <button class="btn-unlock" style="border-color:var(--c-medium);color:var(--c-medium)" onclick="unlockLevel('medium')">Freischalten</button>
+          </div>
+        </div>
+
+        <!-- HARD — Volcanic Theme -->
+        <div class="level-card locked" data-level="hard" id="card-hard">
+          <div class="theme-stripe" style="background:var(--c-hard)"></div>
+          <div class="level-badge">
+            <span class="level-icon">🌋</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-hard)">Volcanic</div>
+          <h2 class="level-name">Schwer</h2>
+          <p class="level-desc">Unbesiegbare KI mit Minimax-Algorithmus. Viel Glück.</p>
+          <div class="level-reward">
+            <span class="reward-win">+40 🪙 Sieg</span>
+            <span class="reward-draw">+8 🪙 Unentschieden</span>
+          </div>
+          <button class="btn-play" onclick="startGame('hard')">Spielen</button>
+          <div class="unlock-overlay" id="overlay-hard">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Für <strong>50 🪙</strong> freischalten</p>
+            <button class="btn-unlock" style="border-color:var(--c-hard);color:var(--c-hard)" onclick="unlockLevel('hard')">Freischalten</button>
+          </div>
+        </div>
+
+        <!-- EXPERT — Space Theme -->
+        <div class="level-card locked" data-level="expert" id="card-expert">
+          <div class="theme-stripe" style="background:var(--c-expert)"></div>
+          <div class="level-badge">
+            <span class="level-icon">🚀</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-expert)">Space</div>
+          <h2 class="level-name">Expert</h2>
+          <p class="level-desc">Minimax ohne Gnade — die KI reagiert blitzschnell und lässt keine Schwäche aus.</p>
+          <div class="level-reward">
+            <span class="reward-win">+60 🪙 Sieg</span>
+            <span class="reward-draw">+12 🪙 Unentschieden</span>
+          </div>
+          <button class="btn-play" onclick="startGame('expert')">Spielen</button>
+          <div class="unlock-overlay" id="overlay-expert">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Für <strong>100 🪙</strong> freischalten</p>
+            <button class="btn-unlock" style="border-color:var(--c-expert);color:var(--c-expert)" onclick="unlockLevel('expert')">Freischalten</button>
+          </div>
+        </div>
+
+        <!-- LEGEND — Neon Theme -->
+        <div class="level-card locked" data-level="legend" id="card-legend">
+          <div class="theme-stripe" style="background:var(--c-legend)"></div>
+          <div class="level-badge">
+            <span class="level-icon">👾</span>
+          </div>
+          <div class="theme-tag" style="color:var(--c-legend)">Neon</div>
+          <h2 class="level-name">Legend</h2>
+          <p class="level-desc">Die ultimative KI — instantane Reaktion, kein Erbarmen. Bist du bereit?</p>
+          <div class="level-reward">
+            <span class="reward-win">+100 🪙 Sieg</span>
+            <span class="reward-draw">+20 🪙 Unentschieden</span>
+          </div>
+          <button class="btn-play" onclick="startGame('legend')">Spielen</button>
+          <div class="unlock-overlay" id="overlay-legend">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-cost">Für <strong>200 🪙</strong> freischalten</p>
+            <button class="btn-unlock" style="border-color:var(--c-legend);color:var(--c-legend)" onclick="unlockLevel('legend')">Freischalten</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ GAME SCREEN ============ -->
+  <div id="screen-game" class="screen">
+
+    <!-- Theme-specific ambient layers -->
+    <div class="theme-bg-layer" id="theme-bg-layer"></div>
+
+    <div class="game-header">
+      <button class="btn-back" onclick="goToMenu()">&#8592; Menü</button>
+      <div class="game-title-area">
+        <span id="game-difficulty-label" class="difficulty-label"></span>
+        <span id="game-theme-label" class="theme-label"></span>
+      </div>
+      <div class="score-board">
+        <div class="score-item player-score">
+          <span class="score-label">Du (X)</span>
+          <span class="score-value" id="score-player">0</span>
+        </div>
+        <div class="score-item draw">
+          <span class="score-label">Remis</span>
+          <span class="score-value" id="score-draw">0</span>
+        </div>
+        <div class="score-item ai-score">
+          <span class="score-label">KI (O)</span>
+          <span class="score-value" id="score-ai">0</span>
+        </div>
+      </div>
+      <!-- Audio controls: separate toggles for music and SFX -->
+      <div class="audio-controls">
+        <button id="btn-music" class="btn-audio" onclick="toggleMusic()" title="Musik">🎵</button>
+        <button id="btn-sfx"   class="btn-audio" onclick="toggleSFX()"   title="Sound">🔔</button>
+      </div>
+    </div>
+
+    <div class="turn-indicator">
+      <div class="turn-badge player-turn" id="badge-player">Du (X)</div>
+      <div class="turn-vs">vs</div>
+      <div class="turn-badge ai-turn" id="badge-ai">KI (O)</div>
+    </div>
+
+    <div class="board-wrapper">
+      <div class="board" id="board">
+        <div class="cell" data-index="0" onclick="handleCellClick(0)"></div>
+        <div class="cell" data-index="1" onclick="handleCellClick(1)"></div>
+        <div class="cell" data-index="2" onclick="handleCellClick(2)"></div>
+        <div class="cell" data-index="3" onclick="handleCellClick(3)"></div>
+        <div class="cell" data-index="4" onclick="handleCellClick(4)"></div>
+        <div class="cell" data-index="5" onclick="handleCellClick(5)"></div>
+        <div class="cell" data-index="6" onclick="handleCellClick(6)"></div>
+        <div class="cell" data-index="7" onclick="handleCellClick(7)"></div>
+        <div class="cell" data-index="8" onclick="handleCellClick(8)"></div>
+      </div>
+      <svg class="win-line-svg" id="win-line-svg" viewBox="0 0 3 3" preserveAspectRatio="none">
+        <line id="win-line" x1="-10" y1="-10" x2="-10" y2="-10" />
+      </svg>
+    </div>
+
+    <button class="btn-new-game" onclick="resetBoard()">Neues Spiel</button>
+  </div>
+
+  <!-- ============ RESULT MODAL ============ -->
+  <div id="result-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-icon" id="modal-icon"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-message" id="modal-message"></p>
+      <div class="modal-coins" id="modal-coins"></div>
+      <div class="modal-actions">
+        <button class="btn-modal-play" onclick="resetBoard(); closeModal()">Nochmal spielen</button>
+        <button class="btn-modal-menu" onclick="goToMenu(); closeModal()">Zum Menü</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div id="toast" class="toast"></div>
+
+  <script src="game.js"></script>
+</body>
+</html>
