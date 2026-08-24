@@ -310,12 +310,12 @@ function renderHeroPlayerIdentity() {
     const identity = state.online.alias || 'Game Center player';
     if (heroName) heroName.textContent = identity;
     if (onlinePlayerId) onlinePlayerId.textContent = identity;
-    if (heroNote) heroNote.textContent = 'Offline play stays available. Online features are ready.';
+    if (heroNote) heroNote.textContent = 'Local progress stays on this device. Game Center is active for ranking and live matches.';
     if (heroLogin) heroLogin.textContent = 'Refresh Game Center';
   } else {
     if (heroName) heroName.textContent = 'Guest player';
     if (onlinePlayerId) onlinePlayerId.textContent = 'Guest player';
-    if (heroNote) heroNote.textContent = 'Offline play is available. Sign in later if you want ranked scores or live matches.';
+    if (heroNote) heroNote.textContent = 'Offline play stores progress only on this device. Sign in later if you want ranked scores or live matches.';
     if (heroLogin) heroLogin.textContent = 'Sign in for online play';
   }
 }
@@ -422,10 +422,10 @@ function renderOnlineState() {
   state.online.available = true;
   if (state.online.authenticated) {
     setOnlineStatus(`Signed in: ${state.online.alias || 'Player'}`, true);
-    setOnlineMessage('Game Center is connected.');
+    setOnlineMessage('Game Center is connected for optional ranking and live matches.');
   } else {
     setOnlineStatus('Game Center ready');
-    setOnlineMessage('Sign in only for ranked scores and live matches.');
+    setOnlineMessage('Sign in only for ranked scores and live matches. Offline progress stays on this device.');
   }
 
   if (state.pvp.searching) {
@@ -1591,6 +1591,57 @@ function scrollToLevels() {
   if (levels) {
     levels.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+
+function resetLocalProgress() {
+  const shouldReset = window.confirm('Delete coins, unlocked modes, score, and audio settings stored on this device?');
+  if (!shouldReset) return;
+
+  stopMusic();
+  stopRoundTimer();
+  closeModal();
+
+  if (state.pvp.active) {
+    leavePvpMode();
+  }
+
+  state.coins = 0;
+  state.unlockedLevels = ['easy'];
+  state.currentDifficulty = null;
+  state.boardSize = LEVELS.easy.boardSize;
+  state.winLength = LEVELS.easy.winLength;
+  state.winCombos = createWinCombos(LEVELS.easy.boardSize, LEVELS.easy.winLength);
+  state.board = createBoardState(LEVELS.easy.boardSize);
+  state.currentPlayer = 'X';
+  state.gameOver = false;
+  state.thinking = false;
+  state.scores = { player: 0, ai: 0, draws: 0 };
+  state.totalScore = 0;
+  state.winStreak = 0;
+  state.roundStartAt = 0;
+  state.elapsedSeconds = 0;
+
+  _musicMuted = false;
+  _sfxMuted = false;
+
+  [
+    'ttt_coins',
+    'ttt_unlocked',
+    'ttt_total_score',
+    'ttt_music_muted',
+    'ttt_sfx_muted',
+  ].forEach((key) => localStorage.removeItem(key));
+
+  renderCoins();
+  renderMenuProgress();
+  renderLevelCards();
+  updateScoreUI();
+  updateRoundTimerUI();
+  syncAudioButtons();
+  applyTheme('classic');
+  applyLevelBoard(LEVELS.easy);
+  showScreen('menu');
+  showToast('Local progress removed from this device.');
 }
 
 function closeModal() {

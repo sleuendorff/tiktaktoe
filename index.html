@@ -10,7 +10,6 @@
   <link rel="manifest" href="manifest.json" />
   <title>Toe Tac Tic</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body data-theme="classic">
 
@@ -31,6 +30,7 @@
         <a href="#hero" class="brand">Toe Tac Tic</a>
         <nav class="nav-links" aria-label="Main navigation">
           <button class="nav-link-btn burger-btn" type="button" onclick="toggleOnlineMenu()">Menu</button>
+          <a href="#trust" class="nav-link-btn">Privacy</a>
         </nav>
         <button class="btn-nav-play" onclick="startGame('easy')">Play now</button>
       </header>
@@ -168,6 +168,40 @@
           <button class="btn-cta-primary" onclick="startGame('easy')">Start Easy now</button>
           <button class="btn-cta-secondary" onclick="startGame('medium')">Start Medium</button>
           <button class="btn-cta-secondary" onclick="scrollToLevels()">Browse all modes</button>
+        </div>
+      </section>
+
+      <section class="trust-section" id="trust">
+        <div class="section-intro compact-intro">
+          <p class="section-kicker">Privacy and support</p>
+          <h2 class="section-title">Clear data handling.</h2>
+          <p class="section-copy">Toe Tac Tic stores coins, unlocked modes, score, and sound settings on this device. Game Center is optional and only used when you choose online ranking or live matches.</p>
+        </div>
+        <div class="trust-grid">
+          <article class="feature-card trust-card">
+            <h3 class="feature-title">Data security</h3>
+            <p class="feature-copy">No ads, no third-party analytics, and no tracking. The app works offline. If you sign in to Game Center, Apple handles leaderboard and matchmaking data for those optional features.</p>
+            <div class="trust-pill-row" aria-label="Privacy summary">
+              <span class="trust-pill">Offline by default</span>
+              <span class="trust-pill">No tracking</span>
+              <span class="trust-pill">Optional Game Center</span>
+            </div>
+          </article>
+          <article class="feature-card trust-card">
+            <h3 class="feature-title">Your controls</h3>
+            <p class="feature-copy">You can remove the app's locally stored progress from this device at any time. This does not delete Game Center records managed by Apple.</p>
+            <div class="online-actions">
+              <button class="btn-hero-secondary" type="button" onclick="resetLocalProgress()">Reset local progress</button>
+            </div>
+          </article>
+          <article class="feature-card trust-card">
+            <h3 class="feature-title">Support</h3>
+            <p class="feature-copy">Need help with gameplay, Game Center sign-in, or a bug report? Contact support directly.</p>
+            <div class="online-actions">
+              <a class="btn-hero-secondary trust-link-btn" href="mailto:Stephan@slowtwitch.de?subject=Toe%20Tac%20Tic%20Support">Email support</a>
+            </div>
+            <p class="trust-contact">Stephan@slowtwitch.de</p>
+          </article>
         </div>
       </section>
 

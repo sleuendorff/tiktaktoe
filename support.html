@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toe Tac Tic Support</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0b14;
+      --surface: #151522;
+      --border: #2a2a42;
+      --text: #e8e8f0;
+      --muted: #a7a7c2;
+      --accent: #51cf66;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #090912, var(--bg));
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .28);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(81, 207, 102, .12);
+      border: 1px solid rgba(81, 207, 102, .28);
+      color: #cdf0d3;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 { margin: 0 0 14px; }
+    h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; }
+    h2 { margin-top: 26px; font-size: 1.2rem; }
+    p, li { color: var(--muted); }
+    ul { padding-left: 20px; }
+    a { color: #c6f7d0; }
+    .meta { margin: 12px 0 0; font-size: .95rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <span class="eyebrow">Toe Tac Tic</span>
+      <h1>Support</h1>
+      <p class="meta">Last updated: 2026-08-24</p>
+
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:Stephan@slowtwitch.de">Stephan@slowtwitch.de</a></p>
+
+      <h2>What Toe Tac Tic supports</h2>
+      <ul>
+        <li>Offline single-player play without an account</li>
+        <li>Optional Game Center sign-in for leaderboard and live match features</li>
+        <li>Local on-device progress saving</li>
+        <li>Manual removal of local progress from inside the app</li>
+      </ul>
+
+      <h2>Common issues</h2>
+      <p><strong>Game Center button does not sign in</strong><br />Make sure you are running the installed iOS app, not just the browser version. Confirm that Game Center is enabled in iOS Settings. If multiplayer is restricted on the account, live matchmaking will stay unavailable.</p>
+      <p><strong>My score or rank did not update</strong><br />Ranked scores require Game Center sign-in. Offline play still works without Game Center, but leaderboard updates are only available when signed in.</p>
+      <p><strong>I want to remove my local progress</strong><br />Open the app and go to the Privacy and support section. Use Reset local progress to delete coins, unlocked modes, local score, and audio preferences stored on that device.</p>
+
+      <h2>App Store listing notes</h2>
+      <p>Toe Tac Tic is an offline-first game with no advertising, no third-party analytics, no tracking, and optional Apple Game Center integration for leaderboard and matchmaking.</p>
+    </section>
+  </main>
+</body>
+</html>

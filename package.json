@@ -4,7 +4,7 @@
   "description": "",
   "main": "game.js",
   "scripts": {
-    "build": "cp index.html style.css game.js manifest.json www/",
+    "build": "cp index.html style.css game.js manifest.json privacy.html support.html www/",
     "sync": "npm run build && npx cap sync ios",
     "open": "npm run sync && npx cap open ios",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -4,6 +4,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Avenir Next Condensed", "Arial Narrow", "Trebuchet MS", sans-serif;
   /* ── Neutrals ───────────────────────────────── */
   --bg:        #0b0b14;
   --surface:   #13131f;
@@ -95,7 +97,7 @@ html, body {
   height: 100%;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-ui);
   overflow-x: hidden;
   transition: background .5s;
 }
@@ -128,7 +130,7 @@ body {
 #coin-hud:hover { transform: scale(1.04); }
 #coin-icon  { font-size: 20px; line-height: 1; }
 #coin-count {
-  font-family: 'Orbitron', monospace; font-weight: 700; font-size: 18px;
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
   color: var(--gold); min-width: 30px; transition: color .2s;
 }
 .coin-label { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing:.05em; }
@@ -173,7 +175,7 @@ body {
 }
 
 .brand {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: .95rem;
   font-weight: 700;
   letter-spacing: .08em;
@@ -360,7 +362,7 @@ body {
 
 .hero-account-name,
 .player-id-value {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: 1.05rem;
   color: var(--text);
   word-break: break-word;
@@ -394,7 +396,7 @@ body {
 }
 
 .hero-progress-value {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: 1.5rem;
   color: var(--gold);
 }
@@ -446,7 +448,7 @@ body {
 }
 
 .drawer-title {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: 1.15rem;
 }
 
@@ -509,7 +511,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 82px;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 2.8rem);
   font-weight: 900;
 }
@@ -535,7 +537,7 @@ body {
 }
 
 .metric-value {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--text);
@@ -689,7 +691,7 @@ body {
 }
 
 .leaderboard-current-value {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   color: var(--gold);
 }
 
@@ -723,7 +725,7 @@ body {
 }
 
 .leaderboard-rank {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   color: var(--gold);
   min-width: 38px;
 }
@@ -733,7 +735,7 @@ body {
 }
 
 .leaderboard-score {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
 }
 
 .section-intro {
@@ -774,6 +776,53 @@ body {
 
 .feature-title {
   font-size: 1.1rem;
+}
+
+.trust-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.trust-card {
+  min-height: 100%;
+}
+
+.trust-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.trust-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  color: var(--text);
+  font-size: .76rem;
+  letter-spacing: .04em;
+}
+
+.trust-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.trust-contact {
+  color: var(--muted);
+  font-size: .84rem;
+  word-break: break-word;
 }
 
 .level-grid {
@@ -844,7 +893,7 @@ body {
 }
 
 .title {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: clamp(2.4rem, 8vw, 4.5rem);
   font-weight: 900; letter-spacing: .12em;
   color: var(--text);
@@ -895,7 +944,7 @@ body {
 }
 
 .level-name {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: 1.05rem; font-weight: 700;
 }
 
@@ -917,7 +966,7 @@ body {
   border-radius: var(--radius-sm);
   background: linear-gradient(135deg, var(--t-btn-a), var(--t-btn-b));
   color: #fff;
-  font-family: 'Orbitron', monospace; font-size: .78rem; font-weight: 700;
+  font-family: var(--font-display); font-size: .78rem; font-weight: 700;
   letter-spacing: .06em; cursor: pointer;
   transition: opacity .2s, transform .1s;
   box-shadow: 0 4px 14px rgba(0,0,0,.3);
@@ -943,7 +992,7 @@ body {
   border: 2px solid;
   border-radius: var(--radius-sm);
   background: transparent;
-  font-family: 'Orbitron', monospace; font-size: .76rem; font-weight: 700;
+  font-family: var(--font-display); font-size: .76rem; font-weight: 700;
   letter-spacing: .06em; cursor: pointer;
   transition: background .2s, transform .1s;
 }
@@ -1053,7 +1102,7 @@ body {
 
 .game-title-area { flex: 1; text-align: center; }
 .difficulty-label {
-  font-family: 'Orbitron', monospace; font-size: .85rem;
+  font-family: var(--font-display); font-size: .85rem;
   letter-spacing: .1em; color: var(--t-x);
   display: block; transition: color .4s;
 }
@@ -1072,7 +1121,7 @@ body {
 }
 .score-label { font-size: .65rem; color: var(--muted); font-weight: 500; }
 .score-value {
-  font-family: 'Orbitron', monospace; font-size: 1.25rem; font-weight: 700;
+  font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
   color: var(--t-x); transition: color .4s;
 }
 .score-item.draw .score-value { color: var(--muted); }
@@ -1084,7 +1133,7 @@ body {
 .turn-indicator { display: flex; align-items: center; gap: 16px; }
 .turn-badge {
   padding: 8px 20px; border-radius: 50px;
-  font-family: 'Orbitron', monospace; font-size: .76rem; font-weight: 700;
+  font-family: var(--font-display); font-size: .76rem; font-weight: 700;
   letter-spacing: .06em; border: 2px solid transparent;
   transition: all .25s; opacity: .3;
 }
@@ -1130,7 +1179,7 @@ body {
 }
 .cell {
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   font-size: clamp(1rem, calc(11vw / var(--board-size, 3) + 1rem), 3.8rem); font-weight: 900;
   cursor: pointer; position: relative; user-select: none;
   transition: background .12s;
@@ -1208,7 +1257,7 @@ body {
   padding: 12px 36px; background: transparent;
   border: 2px solid var(--t-x-dim); color: var(--t-x);
   border-radius: var(--radius-sm);
-  font-family: 'Orbitron', monospace; font-size: .8rem; font-weight: 700;
+  font-family: var(--font-display); font-size: .8rem; font-weight: 700;
   letter-spacing: .08em; cursor: pointer;
   transition: background .2s, border-color .2s, box-shadow .2s, color .4s;
 }
@@ -1254,13 +1303,13 @@ body {
 .modal-overlay.show .modal-card { transform: scale(1); }
 
 .modal-icon   { font-size: 56px; line-height: 1; }
-.modal-title  { font-family: 'Orbitron', monospace; font-size: 1.55rem; font-weight: 900; }
+.modal-title  { font-family: var(--font-display); font-size: 1.55rem; font-weight: 900; }
 .modal-message { color: var(--muted); font-size: .9rem; line-height: 1.6; }
 .modal-coins {
   font-size: 1.3rem; font-weight: 700; color: var(--gold);
   background: rgba(255,215,0,.1); border: 1px solid rgba(255,215,0,.25);
   border-radius: 50px; padding: 10px 28px;
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-display);
   min-height: 48px; display: flex; align-items: center; gap: 8px;
 }
 .modal-reward-breakdown {
@@ -1272,7 +1321,7 @@ body {
 .modal-actions { display: flex; gap: 12px; width: 100%; margin-top: 4px; }
 .btn-modal-play, .btn-modal-menu {
   flex: 1; padding: 12px; border-radius: var(--radius-sm);
-  font-family: 'Orbitron', monospace; font-size: .76rem;
+  font-family: var(--font-display); font-size: .76rem;
   font-weight: 700; letter-spacing: .06em; cursor: pointer; transition: all .18s;
 }
 .btn-modal-play {
@@ -1346,7 +1395,8 @@ body {
   }
   .hero-stat-grid,
   .feature-grid,
-  .online-grid {
+  .online-grid,
+  .trust-grid {
     grid-template-columns: 1fr;
   }
   .level-grid { grid-template-columns: repeat(2, 1fr); }
