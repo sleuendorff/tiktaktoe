@@ -49,13 +49,13 @@
               <h3 class="feature-title">Player profile</h3>
               <span class="online-status-pill" id="gc-status">Game Center unavailable</span>
             </div>
-            <p class="feature-copy" id="gc-message">Use Game Center if you want ranking and matchmaking.</p>
+            <p class="feature-copy" id="gc-message">No app account required. Connect Apple Game Center only if you want ranking and matchmaking.</p>
             <div class="player-id-card">
-              <span class="player-id-label">Current player</span>
+              <span class="player-id-label">Player status</span>
               <strong class="player-id-value" id="online-player-id">Guest player</strong>
             </div>
             <div class="online-actions">
-              <button class="btn-hero-secondary" type="button" onclick="authenticateGameCenter()">Use Game Center</button>
+              <button class="btn-hero-secondary" type="button" onclick="authenticateGameCenter()">Connect Game Center</button>
               <button class="btn-hero-secondary" type="button" onclick="loadOnlineLeaderboard()">Refresh board</button>
             </div>
           </article>
@@ -77,7 +77,7 @@
             <span class="leaderboard-meta">Total score</span>
           </div>
           <ol class="leaderboard-list" id="leaderboard-list">
-            <li class="leaderboard-empty">Sign in to load the score board.</li>
+            <li class="leaderboard-empty">Connect Game Center to load the score board.</li>
           </ol>
           <div class="leaderboard-current-user" id="leaderboard-current-user" hidden>
             <span class="leaderboard-current-label">Your rank</span>
@@ -116,14 +116,14 @@
           </div>
           <div class="hero-account" aria-label="Player account status">
             <span class="hero-account-label">Online</span>
-            <span class="hero-account-note" id="hero-player-note">Offline play is available. Sign in later if you want ranked scores or live matches.</span>
+            <span class="hero-account-note" id="hero-player-note">No app account required. Offline play is available, and Apple Game Center is optional for ranked scores or live matches.</span>
           </div>
           <div class="hero-actions hero-actions-primary">
             <button class="btn-hero-primary" onclick="startGame('easy')">Start Easy</button>
             <button class="btn-hero-secondary" onclick="startGame('medium')">Start medium</button>
           </div>
           <div class="hero-actions hero-actions-secondary">
-            <button class="btn-hero-secondary" id="hero-login-cta" onclick="authenticateGameCenter()">Sign in for online play</button>
+            <button class="btn-hero-secondary" id="hero-login-cta" onclick="authenticateGameCenter()">Optional Game Center</button>
           </div>
         </div>
 

@@ -310,13 +310,13 @@ function renderHeroPlayerIdentity() {
     const identity = state.online.alias || 'Game Center player';
     if (heroName) heroName.textContent = identity;
     if (onlinePlayerId) onlinePlayerId.textContent = identity;
-    if (heroNote) heroNote.textContent = 'Local progress stays on this device. Game Center is active for ranking and live matches.';
-    if (heroLogin) heroLogin.textContent = 'Refresh Game Center';
+    if (heroNote) heroNote.textContent = 'No app account required. Local progress stays on this device. Apple Game Center is active for ranking and live matches.';
+    if (heroLogin) heroLogin.textContent = 'Reconnect Game Center';
   } else {
     if (heroName) heroName.textContent = 'Guest player';
     if (onlinePlayerId) onlinePlayerId.textContent = 'Guest player';
-    if (heroNote) heroNote.textContent = 'Offline play stores progress only on this device. Sign in later if you want ranked scores or live matches.';
-    if (heroLogin) heroLogin.textContent = 'Sign in for online play';
+    if (heroNote) heroNote.textContent = 'No app account required. Offline play stores progress only on this device. Apple Game Center is optional for ranked scores or live matches.';
+    if (heroLogin) heroLogin.textContent = 'Optional Game Center';
   }
 }
 
@@ -364,7 +364,7 @@ function renderLeaderboard(entries = state.leaderboardEntries) {
     empty.className = 'leaderboard-empty';
     empty.textContent = state.online.authenticated
       ? 'No ranked scores yet.'
-      : 'Sign in to load the score board.';
+      : 'Connect Game Center to load the score board.';
     list.appendChild(empty);
     renderMenuProgress();
     return;
@@ -424,8 +424,8 @@ function renderOnlineState() {
     setOnlineStatus(`Signed in: ${state.online.alias || 'Player'}`, true);
     setOnlineMessage('Game Center is connected for optional ranking and live matches.');
   } else {
-    setOnlineStatus('Game Center ready');
-    setOnlineMessage('Sign in only for ranked scores and live matches. Offline progress stays on this device.');
+    setOnlineStatus('Optional Game Center');
+    setOnlineMessage('No app account required. Connect Apple Game Center only for ranked scores and live matches. Offline progress stays on this device.');
   }
 
   if (state.pvp.searching) {
@@ -660,7 +660,7 @@ async function startOnlineMatchmaking() {
     return;
   }
   if (!state.online.authenticated) {
-    showToast('Sign in to Game Center first.');
+    showToast('Connect Apple Game Center first.');
     return;
   }
   if (state.online.multiplayerRestricted) {
