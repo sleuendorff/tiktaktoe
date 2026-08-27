@@ -38,10 +38,10 @@ NSGraphicsContext.saveGraphicsState()
 NSGraphicsContext.current = context
 context.imageInterpolation = .high
 
-let pink  = NSColor(calibratedRed: 0.98, green: 0.24, blue: 0.68, alpha: 1)
-let blue  = NSColor(calibratedRed: 0.20, green: 0.42, blue: 1.00, alpha: 1)
-let white = NSColor.white
-let ink   = NSColor(calibratedRed: 0.16, green: 0.16, blue: 0.22, alpha: 1)
+let darkBlue = NSColor(calibratedRed: 0.06, green: 0.13, blue: 0.42, alpha: 1)
+let blue     = NSColor(calibratedRed: 0.20, green: 0.42, blue: 1.00, alpha: 1)
+let white    = NSColor.white
+let ink      = NSColor(calibratedRed: 0.10, green: 0.16, blue: 0.32, alpha: 1)
 
 func rounded(_ rect: NSRect, radius: CGFloat) -> NSBezierPath {
     NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius)
@@ -49,11 +49,11 @@ func rounded(_ rect: NSRect, radius: CGFloat) -> NSBezierPath {
 
 let bounds = NSRect(x: 0, y: 0, width: side, height: side)
 
-// Solid pink background
-pink.setFill()
+// Solid dark-blue background
+darkBlue.setFill()
 NSBezierPath(rect: bounds).fill()
 
-// Blue lower-right diagonal triangle
+// Bright blue lower-right diagonal triangle
 let bluePath = NSBezierPath()
 bluePath.move(to: NSPoint(x: side, y: side))
 bluePath.line(to: NSPoint(x: 0, y: 0))
@@ -73,7 +73,7 @@ stripe.close()
 white.withAlphaComponent(0.95).setFill()
 stripe.fill()
 
-// Giant O top-left
+// Giant O top-left (dark-blue side)
 let oCenter = NSPoint(x: 300, y: 720)
 let oOuter = NSBezierPath(ovalIn: NSRect(x: oCenter.x - 220, y: oCenter.y - 220, width: 440, height: 440))
 white.setStroke()
@@ -81,7 +81,7 @@ oOuter.lineWidth = 74
 oOuter.stroke()
 
 let oInner = NSBezierPath(ovalIn: NSRect(x: oCenter.x - 152, y: oCenter.y - 152, width: 304, height: 304))
-pink.setStroke()
+darkBlue.setStroke()
 oInner.lineWidth = 44
 oInner.stroke()
 
@@ -106,17 +106,17 @@ drawX(center: xCenter, arm: 170, color: blue, lineWidth: 46)
 let pillRect = NSRect(x: 64, y: 72, width: side - 128, height: 200)
 let pillPath = rounded(pillRect, radius: 76)
 
-// White filled pill with subtle 2px pink→blue outer ring
+// White filled pill with subtle dark-blue → blue outer ring
 NSGraphicsContext.saveGraphicsState()
 pillPath.addClip()
-let ringGradient = NSGradient(colors: [pink, blue])
+let ringGradient = NSGradient(colors: [darkBlue, blue])
 ringGradient?.draw(in: pillRect, angle: 0)
 let innerRect = pillRect.insetBy(dx: 14, dy: 14)
 white.setFill()
 rounded(innerRect, radius: 66).fill()
 NSGraphicsContext.restoreGraphicsState()
 
-// Title text: TOE TAC TIC across pink / ink / blue
+// Title text: TOE TAC TIC across dark blue / ink / blue
 let paragraph = NSMutableParagraphStyle()
 paragraph.alignment = .center
 
@@ -130,7 +130,7 @@ let title = NSMutableAttributedString(
     string: "TOE ",
     attributes: [
         .font: titleFont,
-        .foregroundColor: pink,
+        .foregroundColor: darkBlue,
         .paragraphStyle: paragraph,
         .kern: 6,
         .shadow: titleShadow,
