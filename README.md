@@ -18,6 +18,8 @@ The app stores gameplay progress and audio preferences locally on the device.
 
 Game Center is optional and is only used when the player chooses online ranking or live matchmaking.
 
+All mode unlocks use coins earned through gameplay only. The app has no paid content, subscriptions, or in-app purchases.
+
 The app does not include ads, third-party analytics, or tracking.
 
 ## App Store submission notes

@@ -40,6 +40,7 @@ For App Store Connect, Toe Tac Tic should be described as:
 - No advertising
 - No third-party analytics
 - No tracking
+- No paid content, subscriptions, or in-app purchases
 - Optional Apple Game Center integration for leaderboard and matchmaking
 
 If you need public App Store URLs, publish the contents of `SUPPORT.md` and `PRIVACY.md` on a public website before submission.
